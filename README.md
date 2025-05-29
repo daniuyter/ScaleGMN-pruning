@@ -17,7 +17,7 @@ _insert abstract_
 To create a clean virtual environment and install the necessary dependencies execute:
 ```bash
 git clone git@github.com:daniuyter/scalegmn-pruning.git
-cd ScaleGMN-final/
+cd ScaleGMN-pruning/
 conda env create -n scalegmn --file environment.yml
 conda activate scalegmn
 ```
