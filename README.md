@@ -106,13 +106,13 @@ configs/cifar10/scalegmn_relu.yml
 ```
 The values in this file are the original values we used for our experiments.
 
-To run our Invariant Pruning method, the best way is to run the following file:
+To run our Invariant Pruning method with a pretrained and finetuned ScaleGMN, the best way is to run the following file:
  
 ```bash
 gradual_pruning.py --conf configs/cifar10/scalegmn_relu.yml
 ```
 
-This will gradually prune (at sparsities 60-70-80-90%) and finetune the best CNN from SmallCNNZoo on the CIFAR10-GS split, which we discussed in the paper. The pruned models will be selected based on best validation accuracy, and will be saved to the directory from where you can load and evaluate them on CIFAR10-GS.
+This will gradually prune (at sparsities 60-70-80-90%) and finetune the best CNN from SmallCNNZoo on the CIFAR10-GS split, which we discussed in the paper. The pruned models will be selected based on best validation accuracy, and will be saved to the directory from where you can load and evaluate them on CIFAR10-GS. 
 
 To evaluate the pruned models, run the following command:
 
