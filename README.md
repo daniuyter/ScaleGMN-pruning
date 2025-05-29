@@ -3,8 +3,8 @@
 
 
 
-<p align="center">Freek Byrman, Tobias Groot, Bart Kuipers and Daniel Uyterlinde (May 2025)<p align="center">
- 
+<p align="center">Freek Byrman, Tobias Groot, Bart Kuipers and Daniel Uyterlinde <p align="center">
+ <p align="center">May 2025<p align="center">
 
 
 <p align="center"> <p align="center">
