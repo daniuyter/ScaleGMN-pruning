@@ -1,6 +1,3 @@
-*NOTE: Parts of this repository (mostly on reproduction results) are adapted from [Kalogeropoulos et al.](https://github.com/jkalogero/scalegmn).* 
-
-
 
 # <p align="center"> Neural Network Pruning with Scale Equivarient Graph Metanetworks (ScaleGMN)</p>
 
@@ -67,6 +64,7 @@ In this work, we introduced Invariant and Equivariant Pruning, two novel methodo
 
 # **Part 2: Code**
 ## **Section 2.1: Reproduction original experiments**
+*NOTE: This section is partially adapted from [Kalogeropoulos et al.](https://github.com/jkalogero/scalegmn).* 
 
 ### Setup
 
