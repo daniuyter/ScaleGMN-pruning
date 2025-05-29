@@ -104,13 +104,24 @@ python predicting_generalization.py --conf configs/cifar10/scalegmn_hetero.yml
 # **Section 2: Pruning with ScaleGMN**
 
 ### Invariant Pruning
+First, make sure to set your preferred setting in the config file:
+
+```bash
+configs/cifar10/scalegmn_relu.yml
+```
+This was the config used for our experiments.
+Other config files can also be used, depending on the activation function of the CNN you want to process. 
+
+
 To run our Invariant Pruning method, the best way is to run the following file:
  
 ```bash
 gradual_pruning.py --conf configs/cifar10/scalegmn_relu.yml
 ```
 
-This will gradually prune (at sparsities 60-70-80-90%) the best CNN from SmallCNNZoo on the CIFAR10-GS split, which we discussed in the paper. 
+This will gradually prune (at sparsities 60-70-80-90%) and finetune the best CNN from SmallCNNZoo on the CIFAR10-GS split, which we discussed in the paper. The pruned models will be selected based on validation accuracy, and will be saved to the directory, from where you can load them and evaluate them on CIFAR10-GS.
+
+
 
 # Citation
 
