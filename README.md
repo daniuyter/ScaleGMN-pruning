@@ -2,6 +2,7 @@ Note: This repository is partially adapted from ORIGINAL PAPER.
 
 # Neural Network Pruning with Scale Equivarient Graph Metanetworks (ScaleGMN)
 Repository for 'Pruning with Scale Equivariant Graph Metanetworks' (June 2025)
+
 by Freek Byrman, Tobias Groot, Bart Kuipers and Daniel Uyterlinde
 
 link to paper
