@@ -10,12 +10,6 @@ link to paper
 ## Abstract
 _insert abstract_
 
-  * [Setup](#setup)
-  * [Data](#data)
-  * [Experiments](#experiments)
-  * [Citation](#citation)
-
-
 # **Section 1: Reproduction original experiments**
 
 ### Setup
