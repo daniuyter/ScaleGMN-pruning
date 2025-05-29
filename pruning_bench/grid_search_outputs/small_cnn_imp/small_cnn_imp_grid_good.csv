@@ -1,0 +1,9 @@
+model,pruning_method,num_imp_steps,batch_size,lr,patience,min_delta,prune_biases,snip_mini_batches,seed,fraction,test_accuracy_immediate,best_val_loss_ft,val_acc_at_best_loss_ft,epochs_finetuned_ft
+small_cnn,imp,5,256,0.01,10,1e-05,False,,42,0.6,53.44,1.3262610733509064,53.5,91
+small_cnn,imp,5,256,0.01,10,1e-05,False,,42,0.7,39.11,1.67461656332016,39.879999999999995,150
+small_cnn,imp,5,256,0.01,10,1e-05,False,,42,0.8,22.5,2.115871453285217,22.42,185
+small_cnn,imp,5,256,0.01,10,1e-05,False,,42,0.9,11.33,2.2884420275688173,11.200000000000001,238
+small_cnn,imp,5,256,0.001,10,1e-05,False,,42,0.6,54.87,1.301802384853363,54.279999999999994,219
+small_cnn,imp,5,256,0.001,10,1e-05,False,,42,0.7,46.82,1.568070763349533,47.36,285
+small_cnn,imp,5,256,0.001,10,1e-05,False,,42,0.8,33.85,1.8495594680309295,33.68,532
+small_cnn,imp,5,256,0.001,10,1e-05,False,,42,0.9,13.33,2.253651773929596,14.14,650

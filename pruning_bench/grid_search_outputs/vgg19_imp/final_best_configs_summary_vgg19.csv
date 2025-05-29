@@ -1,0 +1,5 @@
+fraction,pruning_method,best_val_loss,val_acc_at_best_loss,selected_hyperparams_str,selected_seed,selected_ft_epochs,final_reported_test_accuracy
+0.9,imp,0.02223606201587245,99.38,"BS:256, LR:0.0001, Pat:10, MinDel:1e-05, PruneBiases:False, IMP_Steps:5",42,74,91.25
+0.95,imp,0.03188404522952624,99.16,"BS:256, LR:0.0001, Pat:10, MinDel:1e-05, PruneBiases:False, IMP_Steps:5",42,69,91.32000000000001
+0.97,imp,0.0972146274521947,96.7,"BS:256, LR:0.0001, Pat:10, MinDel:1e-05, PruneBiases:False, IMP_Steps:5",42,74,90.34
+0.99,imp,0.29137505814433096,90.82000000000001,"BS:256, LR:0.0001, Pat:10, MinDel:1e-05, PruneBiases:False, IMP_Steps:5",42,81,87.68

@@ -1,0 +1,6 @@
+Hyperparameters: BS:256, LR:0.01, Pat:10, MinDel:1e-05, PruneBiases:True
+Fraction	42	Mean Test Acc	Std Test Acc
+0.90	10.00	10.00	0.00
+0.95	10.00	10.00	0.00
+0.97	10.00	10.00	0.00
+0.99	10.00	10.00	0.00

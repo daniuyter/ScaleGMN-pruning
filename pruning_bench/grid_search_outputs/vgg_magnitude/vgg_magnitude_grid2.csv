@@ -1,0 +1,5 @@
+model,pruning_method,batch_size,lr,patience,min_delta,prune_biases,snip_mini_batches,seed,fraction,accuracy
+vgg19,magnitude,256,0.0001,10,1e-05,True,,42,0.9,91.58
+vgg19,magnitude,256,0.0001,10,1e-05,True,,42,0.95,91.78
+vgg19,magnitude,256,0.0001,10,1e-05,True,,42,0.97,89.89
+vgg19,magnitude,256,0.0001,10,1e-05,True,,42,0.99,54.449999999999996

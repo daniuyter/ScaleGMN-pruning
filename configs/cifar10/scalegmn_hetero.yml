@@ -1,0 +1,149 @@
+batch_size: 1
+data:
+  dataset: cifar10
+  dataset_path: ./data/cifar10/
+  data_path: ./data/cifar10/weights.npy
+  metrics_path: ./data/cifar10/metrics.csv.gz
+  layout_path: ./data/cifar10/layout.csv
+  idcs_file: ./data/cifar10/cifar10_split.csv
+  activation_function: null
+  node_pos_embed: &node_pos_embed True
+  edge_pos_embed: &edge_pos_embed False
+  # the below can be extracted per datapoint, but since it is the same for all, we can define it here
+  layer_layout: [1, 16, 16, 16, 10]
+
+load_pretrained_path: '/home/scur2670/scalegmn/results/experiment/model_seed_0.pt'  # Set this to the path of your .pt file, e.g., "results/experiment/model_seed_0.pt"
+skip_initial_training: True # Set to true if load_pretrained_path is specified and you want to skip training
+
+gradual_pruning_eval:
+  run: true # Set to true to run this experiment
+  max_epochs: 2000
+  sparsity_interval: 10.0 # Evaluate every 10% increase
+  finetune_epochs_ckpt: 15 # FT epochs at checkpoint
+  finetune_lr_ckpt: 0.0001
+  
+  
+train_args:
+  num_epochs: 200
+  seed: 0
+  loss: MSE
+
+scalegmn_args:
+  d_in_v: &d_in_v 1  # initial dimension of input nn bias
+  d_in_e: &d_in_e 1  # initial dimension of input nn weights
+  d_hid: &d_hid 128  # hidden dimension
+  num_layers: 4 # number of gnn layers to apply
+  direction: forward
+  equivariant: False
+  symmetry: hetero  # symmetry
+  jit: False # prefer compile - compile gnn to optimize performance
+  compile: False # compile gnn to optimize performance
+
+  readout_range: last_layer  # or full_graph
+  gnn_skip_connections: False
+
+  concat_mlp_directions: False
+  reciprocal: True
+
+  node_pos_embed: *node_pos_embed  # use positional encodings
+  edge_pos_embed: *edge_pos_embed  # use positional encodings
+
+  _max_kernel_height: 3
+  _max_kernel_width: 3
+
+
+  graph_init:
+    d_in_v: *d_in_v
+    d_in_e: *d_in_e
+    project_node_feats: True
+    project_edge_feats: True
+    d_node: *d_hid
+    d_edge: *d_hid
+
+  positional_encodings:
+    final_linear_pos_embed: False
+    sum_pos_enc: False
+    po_as_different_linear: False
+    equiv_net: False
+    # args for the equiv net option.
+    sum_on_io: True
+    equiv_on_hidden: True
+    num_mlps: 3
+    layer_equiv_on_hidden: False
+
+  gnn_args:
+    d_hid: *d_hid
+    message_fn_layers: 1
+    message_fn_skip_connections: False
+    update_node_feats_fn_layers: 1
+    update_node_feats_fn_skip_connections: False
+    update_edge_attr: True
+    dropout: 0.2
+    dropout_all: False  # False: only in between the gnn layers, True: + all mlp layers
+    update_as_act: False
+    update_as_act_arg: sum
+    mlp_on_io: True
+
+    msg_equiv_on_hidden: True
+    upd_equiv_on_hidden: True
+    layer_msg_equiv_on_hidden: False
+    layer_upd_equiv_on_hidden: False
+    msg_num_mlps: 2
+    upd_num_mlps: 2
+    pos_embed_msg: False
+    pos_embed_upd: False
+    layer_norm: False
+    aggregator: add
+    sign_symmetrization: False # not used here since we have relu
+
+  mlp_args:
+    d_k: [ *d_hid ]
+    activation: silu
+    dropout: 0.
+    final_activation: identity
+    batch_norm: False  # check again
+    layer_norm: True
+    bias: True
+    skip: False
+
+
+  readout_args:
+    d_out: 1  # output dimension of the model
+    d_rho: *d_hid  # intermediate dimension within Readout module - only used in PermutationInvariantSignNet
+
+optimization:
+  clip_grad: True
+  clip_grad_max_norm: 10.0
+  optimizer_name: AdamW
+  optimizer_args:
+    lr: 0.001
+    weight_decay: 0.001
+  scheduler_args:
+    scheduler: WarmupLRScheduler
+    warmup_steps: 1000
+    scheduler_mode: min
+    decay_rate: 0
+    decay_steps: 0
+    patience: None
+    min_lr: None
+
+wandb_args:
+  project: cifar10_hetero
+  entity: null
+  group: null
+  name: null
+  tags: null
+
+
+pruning_args:
+  enabled: true          # Set to true to run pruning after training
+  alpha: 1.0e-3         # L1 regularization strength
+  beta: 1.0             # Original loss weight (usually 1.0)
+  num_epochs: 100        # Epochs for pruning fine-tuning
+  lr: 1.0e-3            # Learning rate for pruning fine-tuning
+  optimizer_name: 'Adam' # Optimizer for pruning
+  optimizer_args: {}     # Args for the pruning optimizer (e.g., weight_decay: 0)
+  scheduler_args: {}     # Scheduler args for pruning (optional)
+  threshold: 1.0e-4      # Threshold for zeroing weights after fine-tuning
+  final_finetune_epochs: 5 # Optional: Epochs for final fine-tuning after thresholding
+  final_finetune_lr: 5.0e-5 # Optional: LR for final fine-tuning

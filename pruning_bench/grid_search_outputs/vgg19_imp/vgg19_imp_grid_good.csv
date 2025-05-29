@@ -1,0 +1,5 @@
+model,pruning_method,num_imp_steps,batch_size,lr,patience,min_delta,prune_biases,snip_mini_batches,seed,fraction,test_accuracy_immediate,best_val_loss_ft,val_acc_at_best_loss_ft,epochs_finetuned_ft
+vgg19,imp,5,256,0.0001,10,1e-05,False,,42,0.9,91.08000000000001,0.02223606201587245,99.38,74
+vgg19,imp,5,256,0.0001,10,1e-05,False,,42,0.95,91.32000000000001,0.03188404522952624,99.16,69
+vgg19,imp,5,256,0.0001,10,1e-05,False,,42,0.97,90.71000000000001,0.0972146274521947,96.7,74
+vgg19,imp,5,256,0.0001,10,1e-05,False,,42,0.99,88.06,0.29137505814433096,90.82000000000001,81

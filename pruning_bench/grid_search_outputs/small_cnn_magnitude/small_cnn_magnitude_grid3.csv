@@ -1,0 +1,17 @@
+model,pruning_method,batch_size,lr,patience,min_delta,prune_biases,snip_mini_batches,seed,fraction,accuracy
+small_cnn,magnitude,128,0.01,10,1e-05,True,,42,0.6,51.559999999999995
+small_cnn,magnitude,128,0.01,10,1e-05,True,,42,0.7,41.199999999999996
+small_cnn,magnitude,128,0.01,10,1e-05,True,,42,0.8,25.230000000000004
+small_cnn,magnitude,128,0.01,10,1e-05,True,,42,0.9,15.879999999999999
+small_cnn,magnitude,256,0.01,10,1e-05,True,,42,0.6,52.23
+small_cnn,magnitude,256,0.01,10,1e-05,True,,42,0.7,40.660000000000004
+small_cnn,magnitude,256,0.01,10,1e-05,True,,42,0.8,24.86
+small_cnn,magnitude,256,0.01,10,1e-05,True,,42,0.9,15.379999999999999
+small_cnn,magnitude,128,0.001,10,1e-05,True,,42,0.6,52.04
+small_cnn,magnitude,128,0.001,10,1e-05,True,,42,0.7,40.94
+small_cnn,magnitude,128,0.001,10,1e-05,True,,42,0.8,25.540000000000003
+small_cnn,magnitude,128,0.001,10,1e-05,True,,42,0.9,10.0
+small_cnn,magnitude,256,0.001,10,1e-05,True,,42,0.6,52.26
+small_cnn,magnitude,256,0.001,10,1e-05,True,,42,0.7,41.27
+small_cnn,magnitude,256,0.001,10,1e-05,True,,42,0.8,24.990000000000002
+small_cnn,magnitude,256,0.001,10,1e-05,True,,42,0.9,10.0

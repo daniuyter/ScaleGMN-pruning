@@ -1,0 +1,9 @@
+model,pruning_method,batch_size,lr,patience,min_delta,prune_biases,snip_mini_batches,seed,fraction,accuracy
+small_cnn,snip,256,0.01,10,1e-05,,3,42,0.6,55.720000000000006
+small_cnn,snip,256,0.01,10,1e-05,,3,42,0.7,53.169999999999995
+small_cnn,snip,256,0.01,10,1e-05,,3,42,0.8,49.43
+small_cnn,snip,256,0.01,10,1e-05,,3,42,0.9,42.76
+small_cnn,snip,256,0.001,10,1e-05,,3,42,0.6,56.36
+small_cnn,snip,256,0.001,10,1e-05,,3,42,0.7,54.669999999999995
+small_cnn,snip,256,0.001,10,1e-05,,3,42,0.8,49.6
+small_cnn,snip,256,0.001,10,1e-05,,3,42,0.9,38.95

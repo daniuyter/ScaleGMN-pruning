@@ -1,0 +1,6 @@
+Hyperparameters: BS:256, LR:0.0001, Pat:10, MinDel:1e-05, SNIP_MB:3
+Fraction	42	Mean Test Acc	Std Test Acc
+0.90	91.36	91.36	0.00
+0.95	87.95	87.95	0.00
+0.97	75.04	75.04	0.00
+0.99	10.00	10.00	0.00

@@ -1,0 +1,5 @@
+fraction,best_val_loss,val_acc_at_best_loss,selected_hyperparams_str,selected_seed,selected_ft_epochs,final_reported_test_accuracy
+0.9,0.020800129079725595,99.24,"BS:256, LR:0.0001, Pat:10, MinDel:1e-05, SNIP_MB:3",42,16,91.24
+0.95,0.21853020191192626,93.60000000000001,"BS:256, LR:0.0001, Pat:10, MinDel:1e-05, SNIP_MB:3",42,19,88.92999999999999
+0.97,0.4635956838726997,87.2,"BS:256, LR:0.001, Pat:10, MinDel:1e-05, SNIP_MB:3",42,17,84.00999999999999
+0.99,1.0489536494016647,64.4,"BS:256, LR:0.001, Pat:10, MinDel:1e-05, SNIP_MB:1",42,63,69.93

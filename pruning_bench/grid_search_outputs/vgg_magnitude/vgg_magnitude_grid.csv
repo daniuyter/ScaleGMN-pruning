@@ -1,0 +1,13 @@
+model,pruning_method,batch_size,lr,patience,min_delta,prune_biases,snip_mini_batches,seed,fraction,accuracy
+vgg19,magnitude,256,0.1,10,1e-05,True,,42,0.9,10.0
+vgg19,magnitude,256,0.1,10,1e-05,True,,42,0.95,10.0
+vgg19,magnitude,256,0.1,10,1e-05,True,,42,0.97,10.0
+vgg19,magnitude,256,0.1,10,1e-05,True,,42,0.99,10.0
+vgg19,magnitude,256,0.01,10,1e-05,True,,42,0.9,10.0
+vgg19,magnitude,256,0.01,10,1e-05,True,,42,0.95,10.0
+vgg19,magnitude,256,0.01,10,1e-05,True,,42,0.97,10.0
+vgg19,magnitude,256,0.01,10,1e-05,True,,42,0.99,10.0
+vgg19,magnitude,256,0.001,10,1e-05,True,,42,0.9,87.5
+vgg19,magnitude,256,0.001,10,1e-05,True,,42,0.95,88.78
+vgg19,magnitude,256,0.001,10,1e-05,True,,42,0.97,89.35
+vgg19,magnitude,256,0.001,10,1e-05,True,,42,0.99,76.12
