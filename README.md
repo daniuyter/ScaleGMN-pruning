@@ -1,22 +1,25 @@
-Note: This repository is partially adapted from ORIGINAL PAPER.
+*NOTE: Parts of this repository (mostly on reproduction results) are adapted from [Kalogeropoulos et al.](https://github.com/jkalogero/scalegmn).* 
 
-# Neural Network Pruning with Scale Equivarient Graph Metanetworks (ScaleGMN)
-Repository for 'Pruning with Scale Equivariant Graph Metanetworks' (June 2025)
 
-by Freek Byrman, Tobias Groot, Bart Kuipers and Daniel Uyterlinde
 
-link to paper
+# <p align="center"> Neural Network Pruning with Scale Equivarient Graph Metanetworks (ScaleGMN)</p>
+
+### <p align="center">Repository for 'Pruning with Scale Equivariant Graph Metanetworks' (June 2025)<p align="center">
+
+<p align="center">Freek Byrman, Tobias Groot, Bart Kuipers and Daniel Uyterlinde<p align="center">
+ 
+
+
+<p align="center"> <p align="center">
+
+
 # **Part 1: Project Description**
 
 ## **Section 1.1: Introduction**
 Neural Networks (NNs) have seen a dramatic increase in scale, leading to a greater demand for efficient model optimization techniques such as architecture search, pruning, and knowledge transfer. Metanetworks, designed to analyze and process other NNs, offer a promising solution to this challenge. These models function as mappings, $\hat{f} :\mathcal{G} \times \boldsymbol{\Theta} \to \mathcal{Y}$
 ​where $\mathcal{G}$ represents the space of computational graphs (NN architectures) and Θ denotes the space of learnable parameters. Within this framework, metanetworks can act as either functionals, producing scalar or vector-valued outputs ($\mathcal{Y} \subset \mathbb{R}^d$), or operators, transforming the network's structure or parameters ($\mathcal{Y} = \mathcal{G} \times \boldsymbol{\Theta}$).
 
-
-
-
 A critical aspect of processing NNs is acknowledging their inherent symmetries. Permutation symmetry, involving the reordering of nodes within a layer and corresponding connection adjustments, is a fundamental example. Beyond permutations, scaling symmetries, which arise from non-zero scalar multiplication or division of weights and biases, also exist but have been less extensively explored. These symmetries establish equivalence classes of parameter configurations that represent identical functions. Formally, an NN symmetry is defined by a set of transformations $\psi : \mathcal{G} \times \Theta \to \mathcal{G} \times \Theta$ such that the function $u_{G,\theta} : \mathcal{X} \to \hat{\mathcal{X}}$ remains unchanged, i.e., $u_{G,\theta}(x) = u_{\psi(G,\theta)}(x)$ for all inputs $x \in X$.
-
 
 The recognition of these symmetries has driven the development of symmetry-invariant metanetworks. While traditional metanetworks may learn to account for NN symmetries through extensive training, invariant metanetworks are explicitly designed to respect these symmetries by construction. This design principle ensures consistency across functionally equivalent representations, streamlines model learning by obviating the need to rediscover known mathematical symmetries, and enhances generalization to novel NN configurations. Specifically, a metanetwork acting as a functional must be invariant to symmetry transformations: $\hat{f}(\psi(G,\theta)) = \hat{f}(G,\theta)$, while one acting as an operator should be equivariant: $\hat{f}(\psi(G,\theta)) = \psi(\hat{f}(G,\theta))$.
 
