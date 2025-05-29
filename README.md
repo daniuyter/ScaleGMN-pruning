@@ -62,6 +62,12 @@ Nog wachten op freek zn results
 ## **Section 1.5: Conclusion**
 In this work, we introduced Invariant and Equivariant Pruning, two novel methodologies utilizing Scale Equivariant Graph Metanetworks (ScaleGMNs) that leverage permutation and scaling symmetries. Invariant Pruning, employing ScaleGMN as an accuracy predictor (functinonal), contributed a dataset of approximately 4000 pruned networks. This method showed competitive performance for Small CNNs, often outperforming baselines at higher sparsity levels, but faced limitations due to pre-training dataset requirements and prediction reliability on sparse architectures. Conversely, Equivariant Pruning, using ScaleGMN as an operator, bypassed extensive pre-training, allowing on-the-fly training and broader applicability to various CNNs. It demonstrated competitive results for both Small CNNs and larger models like VGG19. Our findings underscore the significant inductive bias provided by incorporating scaling symmetries in metanetwork design. Future work will focus on improving ScaleGMN's efficiency and prediction reliability, and extending its application to architectures with skip connections. 
 
+## **Section 1.6: Main Contributions per Author**
+* **Bart Kuipers:** Theoretical foundation, literature review and writing.
+* **Daniel Uyterlinde:** Invariant Pruning approach, dataset of pruned networks and GitHub repository.
+* **Freek Byrman:** Equivariant Pruning approach, theoretical foundation, literature review and writing.
+* **Tobias Groot:** Benchmarking and literature review.
+  
 # **Part 2: Code**
 ## **Section 2.1: Reproduction original experiments**
 *NOTE: This section is partially adapted from [Kalogeropoulos et al.](https://github.com/jkalogero/scalegmn).* 
