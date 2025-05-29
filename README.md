@@ -43,11 +43,20 @@ Our contributions can be summarized as follows:
 * Dataset of Pruned Models: As part of the Invariant Pruning method, we contributed a dataset of 4050 pruned networks at different sparsities. This augmentation aims to address potential out-of-distribution issues when a ScaleGMN trained on dense networks evaluates pruned ones.
 
 ## **Section 1.4: Results**
+We present our results in the table below:
 
-TABEL
+<p align="center">
+  <img src="./assets/table.png" alt="Results" width="800"/>
+</p>
 
 ### Invariant Pruning
-We observe that Invariant Pruning with ScaleGMN encounters a critical limitation: the accuracy predicted by ScaleGMN during pruning is often highly unreliable. We hypothesize that the optimization process exploits the predictor, steering the model’s weights toward regions in the parameter space where the predicted accuracy is artificially inflated. This undermines the validity of the guidance signal, making the pruning process more challenging. To address this, we finetuned ScaleGMN on an augmented dataset containing pruned networks. While this slightly reduced the prediction gap, the issue of unreliable accuracy estimates during pruning remained largely unresolved. Interestingly, despite this shortcoming, the method still outperforms all baselines. Toward the end of the pruning process, the L1 term and the predicted accuracy begin to converge, suggesting that the accuracy predictor, though imperfect, still plays a valuable role in preserving critical weights during the final stages of pruning.
+We observe that Invariant Pruning with ScaleGMN encounters a critical limitation: the accuracy predicted by ScaleGMN during pruning is often highly unreliable; the predicted accuracy quickly grows to 90%, which to the best of our knowledge is impossible with <4970 parameters. 
+
+<p align="center">
+  <img src="./assets/predacc.png" alt="Predicted Accuracy term Invariant Pruning" width="650"/>
+</p>
+
+We hypothesize that the optimization process exploits the predictor, steering the model’s weights toward regions in the parameter space where the predicted accuracy is artificially inflated.This undermines the validity of the guidance signal, making the pruning process more challenging. To address this, we finetuned ScaleGMN on an augmented dataset containing pruned networks. While this slightly reduced the prediction gap, the issue of unreliable accuracy estimates during pruning remained largely unresolved. Interestingly, despite this shortcoming, the method still outperforms all baselines. Toward the end of the pruning process, the L1 term and the predicted accuracy begin to converge, suggesting that the accuracy predictor, though imperfect, still plays a valuable role in preserving critical weights during the final stages of pruning.
 
 ### Equivariant Pruning
 Nog wachten op freek zn results
