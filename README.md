@@ -6,11 +6,55 @@ Repository for 'Pruning with Scale Equivariant Graph Metanetworks' (June 2025)
 by Freek Byrman, Tobias Groot, Bart Kuipers and Daniel Uyterlinde
 
 link to paper
+# **Part 1: Project Description**
 
-## Abstract
-_insert abstract_
+## **Section 1.1: Introduction**
+Neural Networks (NNs) have seen a dramatic increase in scale, leading to a greater demand for efficient model optimization techniques such as architecture search, pruning, and knowledge transfer. Metanetworks, designed to analyze and process other NNs, offer a promising solution to this challenge. These models function as mappings, $\hat{f} :\mathcal{G} \times \boldsymbol{\Theta} \to \mathcal{Y}$
+​where $\mathcal{G}$ represents the space of computational graphs (NN architectures) and Θ denotes the space of learnable parameters. Within this framework, metanetworks can act as either functionals, producing scalar or vector-valued outputs ($\mathcal{Y} \subset \mathbb{R}^d$), or operators, transforming the network's structure or parameters ($\mathcal{Y} = \mathcal{G} \times \boldsymbol{\Theta}$).
 
-# **Section 1: Reproduction original experiments**
+
+
+
+A critical aspect of processing NNs is acknowledging their inherent symmetries. Permutation symmetry, involving the reordering of nodes within a layer and corresponding connection adjustments, is a fundamental example. Beyond permutations, scaling symmetries, which arise from non-zero scalar multiplication or division of weights and biases, also exist but have been less extensively explored. These symmetries establish equivalence classes of parameter configurations that represent identical functions. Formally, an NN symmetry is defined by a set of transformations $\psi : \mathcal{G} \times \Theta \to \mathcal{G} \times \Theta$ such that the function $u_{G,\theta} : \mathcal{X} \to \hat{\mathcal{X}}$ remains unchanged, i.e., $u_{G,\theta}(x) = u_{\psi(G,\theta)}(x)$ for all inputs $x \in X$.
+
+
+The recognition of these symmetries has driven the development of symmetry-invariant metanetworks. While traditional metanetworks may learn to account for NN symmetries through extensive training, invariant metanetworks are explicitly designed to respect these symmetries by construction. This design principle ensures consistency across functionally equivalent representations, streamlines model learning by obviating the need to rediscover known mathematical symmetries, and enhances generalization to novel NN configurations. Specifically, a metanetwork acting as a functional must be invariant to symmetry transformations: $\hat{f}(\psi(G,\theta)) = \hat{f}(G,\theta)$, while one acting as an operator should be equivariant: $\hat{f}(\psi(G,\theta)) = \psi(\hat{f}(G,\theta))$.
+
+### **Related Work:** 
+Recent advancements in metanetworks, particularly Graph Meta Networks (GMNs), have demonstrated improved performance in tasks like NN classification and weight generation by leveraging permutation symmetries, either through architectural design or GMNs. Building on this, Kalogeropoulos et al. introduced the Scale Equivariant Graph Meta Network (ScaleGMN) to incorporate scaling symmetries, extending the GMN framework with scale-equivariant message passing. This work applies the ScaleGMN framework to NN pruning, a critical optimization task that can be broadly categorized into unstructured (individual weight removal) and structured (neuron or channel removal) pruning. Structured pruning, in particular, presents significant automation challenges due to inter-layer dependencies and the exponential growth of possible channel configurations, making exhaustive search impractical. Consequently, traditional automated methods relying on non-differentiable reinforcement learning or evolutionary algorithms often require lengthy search times to converge. While meta-networks have emerged as an alternative pruning strategy, initially by generating weights for candidate pruned structures to enable immediate evaluation and later by directly pruning networks. Noteworthy is the differentiable meta-pruning method by Li et al., which uses hypernetworks that generate weights from latent vectors encoding layer configurations. Although these meta-pruning approaches consistently outperform traditional methods, their integration within the ScaleGMN framework has remained unexplored. Our research addresses this gap by proposing two pruning strategies utilizing ScaleGMN: one as a functional and another as an operator.
+
+## **Section 1.2: Potential of ScaleGMN**
+After some brainstorming, we expected ScaleGMN to hold significant potential for advancing neural network pruning, due to its knowledge of network topology and ability to predict accuracy from weights. By modeling both permutation and scaling symmetries, ScaleGMN can provide a more robust and accurate understanding of how parameter transformations affect network functionality. Our main idea was that this inherent symmetry-awareness can guide pruning algorithms to identify and remove redundant neurons or channels more effectively, ensuring that (in Invariant Pruning) the pruned network maintains its performance while achieving higher sparsity levels (Invariant Pruning), or that using ScaleGMN as an operator for allows for direct output of structured pruned parameters (Equivariant Pruning), bypassing the need for extensive pre-training datasets of pruned networks and enabling on-the-fly training applicable to diverse CNN architectures. This ability to directly transform and prune networks in a symmetry-preserving manner suggests a powerful new avenue for automating and optimizing the pruning process, potentially leading to smaller, more efficient models without sacrificing accuracy.
+
+## **Section 1.3: Contributions**
+Our work introduces two novel strategies for neural network pruning, leveraging the recently developed Scale Equivariant Graph Meta Network (ScaleGMN) framework. These methods, termed "Invariant Pruning" and "Equivariant Pruning," represent the first exploration of ScaleGMN's application in the domain of NN pruning.
+
+Our contributions can be summarized as follows:
+
+* Invariant Pruning method with ScaleGMN: We propose an "Invariant Pruning" method that utilizes ScaleGMN as a functional, predicting the generalization performance of a target network. This approach involves training a ScaleGMN to estimate accuracy from weights and then using this trained predictor to guide a pruning process that optimizes for sparsity while maintaining predicted accuracy. A key aspect is the augmentation of the Small CNN Zoo dataset with pruned networks to better match the ScaleGMN's training data with its pruning objective.
+
+* Equivariant Pruning method with ScaleGMN: We introduce an "Equivariant Pruning" method where ScaleGMN acts as an operator, directly outputting a set of structured pruned parameters from the input network's architecture and parameters. This method is trained end-to-end to produce sparse weights while ensuring the pruned network maintains its classification performance. This approach bypasses the need for extensive pre-training datasets of pruned networks, offering broader applicability and on-the-fly training.
+
+* Empirical Validation and Comparison: We provide comprehensive experimental results comparing our ScaleGMN-based pruning methods against established baselines such as L1 regularization, magnitude-based pruning, and Iterative Magnitude Pruning (IMP). Our findings demonstrate competitive performance, with ScaleGMN-Inv often outperforming baselines at higher sparsity levels for Small CNNs, and ScaleGMN-Eq showing competitive results for both Small CNNs and larger models like VGG19.
+
+* Dataset of Pruned Models: As part of the Invariant Pruning method, we contributed a dataset of 4050 pruned networks at different sparsities. This augmentation aims to address potential out-of-distribution issues when a ScaleGMN trained on dense networks evaluates pruned ones.
+
+## **Section 1.4: Results**
+
+TABEL
+
+### Invariant Pruning
+We observe that Invariant Pruning with ScaleGMN encounters a critical limitation: the accuracy predicted by ScaleGMN during pruning is often highly unreliable. We hypothesize that the optimization process exploits the predictor, steering the model’s weights toward regions in the parameter space where the predicted accuracy is artificially inflated. This undermines the validity of the guidance signal, making the pruning process more challenging. To address this, we finetuned ScaleGMN on an augmented dataset containing pruned networks. While this slightly reduced the prediction gap, the issue of unreliable accuracy estimates during pruning remained largely unresolved. Interestingly, despite this shortcoming, the method still outperforms all baselines. Toward the end of the pruning process, the L1 term and the predicted accuracy begin to converge, suggesting that the accuracy predictor, though imperfect, still plays a valuable role in preserving critical weights during the final stages of pruning.
+
+### Equivariant Pruning
+Nog wachten op freek zn results
+
+
+## **Section 1.5: Conclusion**
+In this work, we introduced Invariant and Equivariant Pruning, two novel methodologies utilizing Scale Equivariant Graph Metanetworks (ScaleGMNs) that leverage permutation and scaling symmetries. Invariant Pruning, employing ScaleGMN as an accuracy predictor (functinonal), contributed a dataset of approximately 4000 pruned networks. This method showed competitive performance for Small CNNs, often outperforming baselines at higher sparsity levels, but faced limitations due to pre-training dataset requirements and prediction reliability on sparse architectures. Conversely, Equivariant Pruning, using ScaleGMN as an operator, bypassed extensive pre-training, allowing on-the-fly training and broader applicability to various CNNs. It demonstrated competitive results for both Small CNNs and larger models like VGG19. Our findings underscore the significant inductive bias provided by incorporating scaling symmetries in metanetwork design. Future work will focus on improving ScaleGMN's efficiency and prediction reliability, and extending its application to architectures with skip connections. 
+
+# **Part 2: Code**
+## **Section 2.1: Reproduction original experiments**
 
 ### Setup
 
