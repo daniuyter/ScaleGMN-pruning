@@ -64,7 +64,7 @@ In this work, we introduced Invariant and Equivariant Pruning, two novel methodo
 
 ## **Section 1.6: Main Contributions per Author**
 * **Bart Kuipers:** Theoretical foundation, literature review and writing.
-* **Daniel Uyterlinde:** Invariant Pruning approach, dataset of pruned networks and GitHub repository.
+* **Daniel Uyterlinde:** Invariant Pruning approach, reproduction and GitHub repository.
 * **Freek Byrman:** Equivariant Pruning approach, theoretical foundation, literature review and writing.
 * **Tobias Groot:** Benchmarking and literature review.
   
