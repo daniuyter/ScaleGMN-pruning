@@ -181,14 +181,14 @@ python evaluate_model.py --conf configs/cifar10/scalegmn_relu.yml --model_path <
 ```
 
 ### Equivariant Pruning
-To reproduce the initial training stage of the equivariant pruning method run the following commands:
+The VGG state_dict from which we initializa can be found at \textit{https://github.com/chengyangfu/pytorch-vgg-cifar10/blob/master/README.md}. Store this file as model_best_cpu.pth.tar in the directory src/data. To reproduce the initial training stage of the equivariant pruning method run the following commands:
 ```bash
 python -u equivariant_pruning_smallCNN.py --conf configs/cifar10/eq_pruning_smallCNN.yml
 ```
 ```bash
 python -u equivariant_pruning_VGG.py --conf configs/cifar10/eq_pruning_VGG.yml
 ```
-The sparsity level is specified in the configuration files. To do a hyperparameter sweep over learning rates, finetune, and evaluate on the test set run the following commands:
+In the current setup our pretrained ScaleGMN state dictionary is not provided as it exceeds the maximum GitHub file limit size. The sparsity level is specified in the configuration files. To do a hyperparameter sweep over learning rates, finetune, and evaluate on the test set run the following commands:
 ```bash
 python finetune_and_evaluate_smallCNN.py --conf configs/cifar10/eq_pruning_finetune_smallCNN.yml
 ```
