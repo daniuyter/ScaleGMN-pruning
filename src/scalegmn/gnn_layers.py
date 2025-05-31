@@ -35,13 +35,14 @@ class base_GNN_layer(MessagePassing):
         self.equivariant_gnn = kwargs['equivariant']
         self.direction = direction
 
+        if 'edge_output_dimension' in kwargs:
+            edge_out_dim = kwargs['edge_output_dimension']
+        else:
+            edge_out_dim = 1
         if self.update_edge_attr and (not last_layer or self.equivariant_gnn) and direction == 'forward':
-            # print("Input dimension: ", d_in_v)
-            # print("Last layer: ", last_layer)
-            # print("Hidden dimension: ", d_hid)
             self.update_edge_attr_fn = EdgeUpdate(
                 d_in_v,
-                1 if self.equivariant_gnn and self.last_layer else d_hid,
+                edge_out_dim if self.equivariant_gnn and self.last_layer else d_hid,
                 kwargs['mlp_args'],
                 symmetry=self.symmetry,
                 sign_symmetrization=sign_symmetrization)
@@ -69,6 +70,7 @@ class base_GNN_layer(MessagePassing):
                                     mask_first_layer=mask_first_layer,
                                     pos_embed=pos_embed,
                                     sign_mask=sign_mask)
+
         if self.direction == 'bidirectional':
             return aggregated
 
@@ -83,12 +85,13 @@ class base_GNN_layer(MessagePassing):
                 mask_hidden=mask_hidden,
                 mask_first_layer=mask_first_layer,
                 sign_mask=sign_mask)
+
         if self.update_edge_attr and (not self.last_layer or self.equivariant_gnn):
             out_e = self.update_edge_attr_fn(x, edge_index, edge_attr, sign_mask=sign_mask)
         else:
             out_e = edge_attr
         return out_v, out_e
-    
+
     def __repr__(self):
         repr_str = f'{self.__class__.__name__}(\n' + \
                     f'aggregator={self.aggr},\n' + \
@@ -109,7 +112,7 @@ class ScaleEq_GNN_layer(base_GNN_layer):
     """
     def __init__(self, d_in_v, d_in_e, d_hid, layer_layout, update_edge_attr, symmetry, last_layer, msg_equiv_on_hidden, msg_num_mlps, upd_equiv_on_hidden, upd_num_mlps, layer_msg_equiv_on_hidden, layer_upd_equiv_on_hidden, sign_symmetrization, **kwargs):
         super().__init__(d_in_v, d_in_e, d_hid, layer_layout, update_edge_attr, symmetry, last_layer, sign_symmetrization, direction='forward', **kwargs)
-        
+
         self.w_v = nn.Linear(d_in_v, d_hid, bias=False)
         self.w_e = nn.Linear(d_in_e, d_hid, bias=False)
 
@@ -142,7 +145,7 @@ class ScaleEq_GNN_layer(base_GNN_layer):
             self.update_node_feats_fn = EquivariantNet(
                 kwargs['update_node_feats_fn_layers'],
                 d_hid + d_in_v,
-                1 if self.equivariant_gnn and self.last_layer else d_hid,               ###  BART 1=1  voor bias we need 1 
+                1 if self.equivariant_gnn and self.last_layer else d_hid, # Vertex features
                 kwargs['mlp_args'],
                 d_extra=d_hid * self.pos_embed_upd,
                 symmetry=symmetry,
@@ -162,17 +165,16 @@ class ScaleEq_GNN_layer(base_GNN_layer):
                 mask_first_layer=None,
                 pos_embed=None,
                 sign_mask=None):
+
         x_j = self.w_v(x_j)
         edge_attr = self.w_e(edge_attr)
-        try:
-            msg_j = self.message_fn(
-                edge_attr * x_j,
-                extra_features=pos_embed[edge_index[1]] if self.pos_embed_msg else None,
-                mask_hidden=mask_hidden[edge_index[1]] if mask_hidden is not None else None,
-                mask_first_layer=mask_first_layer[edge_index[1]] if mask_first_layer is not None else None,
-                sign_mask=sign_mask[edge_index[1]] if sign_mask is not None else None)
-        except:
-            print("error in the message passing function!")
+
+        msg_j = self.message_fn(
+            edge_attr * x_j,
+            extra_features=pos_embed[edge_index[1]] if self.pos_embed_msg else None,
+            mask_hidden=mask_hidden[edge_index[1]] if mask_hidden is not None else None,
+            mask_first_layer=mask_first_layer[edge_index[1]] if mask_first_layer is not None else None,
+            sign_mask=sign_mask[edge_index[1]] if sign_mask is not None else None)
         return msg_j
 
 

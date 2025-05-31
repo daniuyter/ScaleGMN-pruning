@@ -181,8 +181,20 @@ python evaluate_model.py --conf configs/cifar10/scalegmn_relu.yml --model_path <
 ```
 
 ### Equivariant Pruning
-
-
+To reproduce the initial training stage of the equivariant pruning method run the following commands:
+```bash
+python -u equivariant_pruning_smallCNN.py --conf configs/cifar10/eq_pruning_smallCNN.yml
+```
+```bash
+python -u equivariant_pruning_VGG.py --conf configs/cifar10/eq_pruning_VGG.yml
+```
+The sparsity level is specified in the configuration files. To do a hyperparameter sweep over learning rates, finetune, and evaluate on the test set run the following commands:
+```bash
+python finetune_and_evaluate_smallCNN.py --conf configs/cifar10/eq_pruning_finetune_smallCNN.yml
+```
+```bash
+python finetune_and_evaluate_VGG.py --conf configs/cifar10/eq_pruning_finetune_VGG.yml
+```
 # Citation
 
 ```bib
