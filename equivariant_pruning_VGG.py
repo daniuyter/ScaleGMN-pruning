@@ -86,8 +86,8 @@ def main(args=None):
     train_size = total_train_size - val_size
     train_subset, val_subset = random_split(full_trainset, [train_size, val_size])
 
-    train_loader = DataLoader(train_subset, batch_size=conf['batch_size'], shuffle=True, num_workers=16)
-    val_loader = DataLoader(val_subset, batch_size=conf['batch_size'], shuffle=False, num_workers=16)
+    train_loader = DataLoader(train_subset, batch_size=conf['batch_size'], shuffle=True)
+    val_loader = DataLoader(val_subset, batch_size=conf['batch_size'], shuffle=False)
 
     # Instantiate and move model to device
     net = ScaleGMN(conf['scalegmn_args'])

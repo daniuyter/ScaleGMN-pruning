@@ -96,8 +96,8 @@ def main(args=None):
 
                 optimizer.zero_grad()
                 ce_loss.backward()
-                # if conf['optimization']['clip_grad']:
-                #     torch.nn.utils.clip_grad_norm_(nonzero_params, conf['optimization']['clip_grad_max_norm'])
+                if conf['optimization']['clip_grad']:
+                    torch.nn.utils.clip_grad_norm_(nonzero_params, conf['optimization']['clip_grad_max_norm'])
                 optimizer.step()
                 scheduler[0].step()
 

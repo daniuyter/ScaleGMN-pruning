@@ -1,4 +1,3 @@
-
 # <p align="center"> Neural Network Pruning with Scale Equivarient Graph Metanetworks (ScaleGMN)</p>
 
 
@@ -33,7 +32,7 @@ Our contributions can be summarized as follows:
 
 * Invariant Pruning method with ScaleGMN: We propose an "Invariant Pruning" method that utilizes ScaleGMN as a functional, predicting the generalization performance of a target network. This approach involves training a ScaleGMN to estimate accuracy from weights and then using this trained predictor to guide a pruning process that optimizes for sparsity while maintaining predicted accuracy. A key aspect is the augmentation of the Small CNN Zoo dataset with pruned networks to better match the ScaleGMN's training data with its pruning objective.
 
-* Equivariant Pruning method with ScaleGMN: We introduce an "Equivariant Pruning" method where ScaleGMN acts as an operator, directly outputting a set of structured pruned parameters from the input network's architecture and parameters. This method is trained end-to-end to produce sparse weights while ensuring the pruned network maintains its classification performance. This approach bypasses the need for extensive pre-training datasets of pruned networks, offering broader applicability and on-the-fly training.
+* Equivariant Pruning method with ScaleGMN: We introduce an "Equivariant Pruning" method where ScaleGMN acts as an operator, directly outputting a set of structured pruned parameters from the input network's architecture and parameters. This method is trained to produce sparse weights while ensuring the pruned network maintains its classification performance. This approach bypasses the need for extensive pre-training datasets of pruned networks, offering broader applicability and on-the-fly training.
 
 * Empirical Validation and Comparison: We provide comprehensive experimental results comparing our ScaleGMN-based pruning methods against established baselines such as L1 regularization, magnitude-based pruning, and Iterative Magnitude Pruning (IMP). Our findings demonstrate competitive performance, with ScaleGMN-Inv often outperforming baselines at higher sparsity levels for Small CNNs, and ScaleGMN-Eq showing competitive results for both Small CNNs and larger models like VGG19.
 
@@ -42,25 +41,22 @@ Our contributions can be summarized as follows:
 ## **Section 1.4: Results**
 We present our results in the table below:
 
-<p align="center">
-  <img src="./assets/table.png" alt="Results" width="800"/>
-</p>
+| Method         | 0%   | 60%  | 70%  | 80%  | 90%  |       | 0%   | 90%  | 95%  | 97%  | 99%  |
+|----------------|------|------|------|------|------|-------|------|------|------|------|------|
+|                | **Small CNN (4,970 parameters)**         |       | **VGG19 (20M+ parameters)**              |
+| Magnitude-based| 57.21| 52.27| 41.06| 27.00| 15.88|       | 92.04| 91.37| 91.52| 89.43| 74.50|
+| IMP            | 57.21| 54.87| 46.82| 33.85| 13.33|       | 92.04| 91.08| 91.32| 90.71| 88.06|
+| L1             | 57.21| 57.30| 57.02| 55.84| **47.31**|   | 92.04| 89.89| 89.91| 89.89| 66.84|
+| ScaleGMN-Inv   | 57.21| **60.31**| **59.66**| **56.29**| 46.27| | --   | --   | --   | --   | --   |
+| ScaleGMN-Eq    | 57.21| 53.54| 51.15| 50.75| 46.09|       | 92.04| 90.72| 90.59| 89.87| 74.40|
 
-### Invariant Pruning
-We observe that Invariant Pruning with ScaleGMN encounters a critical limitation: the accuracy predicted by ScaleGMN during pruning is often highly unreliable; the predicted accuracy quickly grows to 90%, which to the best of our knowledge is impossible with <4970 parameters. 
-
-<p align="center">
-  <img src="./assets/predacc.png" alt="Predicted Accuracy term Invariant Pruning" width="650"/>
-</p>
-
-We hypothesize that the optimization process exploits the predictor, steering the model’s weights toward regions in the parameter space where the predicted accuracy is artificially inflated.This undermines the validity of the guidance signal, making the pruning process more challenging. To address this, we finetuned ScaleGMN on an augmented dataset containing pruned networks. While this slightly reduced the prediction gap, the issue of unreliable accuracy estimates during pruning remained largely unresolved. Interestingly, despite this shortcoming, the method still outperforms all baselines. Toward the end of the pruning process, the L1 term and the predicted accuracy begin to converge, suggesting that the accuracy predictor, though imperfect, still plays a valuable role in preserving critical weights during the final stages of pruning.
-
-### Equivariant Pruning
-Nog wachten op freek zn results
+Accuracy (%) at different sparsity levels (percentage of weights removed). Comparison across Small CNN (4,970 parameters) and VGG19 (20M+ parameters) on CIFAR10-GS. Baselines: Magnitude, IMP, and L1.
 
 
 ## **Section 1.5: Conclusion**
-In this work, we introduced Invariant and Equivariant Pruning, two novel methodologies utilizing Scale Equivariant Graph Metanetworks (ScaleGMNs) that leverage permutation and scaling symmetries. Invariant Pruning, employing ScaleGMN as an accuracy predictor (functinonal), contributed a dataset of approximately 4000 pruned networks. This method showed competitive performance for Small CNNs, often outperforming baselines at higher sparsity levels, but faced limitations due to pre-training dataset requirements and prediction reliability on sparse architectures. Conversely, Equivariant Pruning, using ScaleGMN as an operator, bypassed extensive pre-training, allowing on-the-fly training and broader applicability to various CNNs. It demonstrated competitive results for both Small CNNs and larger models like VGG19. Our findings underscore the significant inductive bias provided by incorporating scaling symmetries in metanetwork design. Future work will focus on improving ScaleGMN's efficiency and prediction reliability, and extending its application to architectures with skip connections. 
+This work introduces Invariant Pruning and Equivariant Pruning, two novel methods based on the ScaleGMN framework, which aim to address the challenge of automated pruning. Invariant Pruning leverages a ScaleGMN as a learned predictor of classification loss within an $L_1$ pruning scheme. While the complex loss landscape and high-dimensional feature space can cause the predictor to exploit out-of-distribution regions and yield overly optimistic accuracy estimates, the gradient directions it provides remain informative. Consequently, the method effectively guides optimization towards promising regions of the weight space. Equivariant pruning leverages a ScaleGMN as an operator to directly map a CNN to a pruned version. As part of this work, we provide an implementation that enables mapping operator-level outputs back to operational CNNs in a differentiable manner. Additionally, we contribute a dataset of approximately 4,000 pruned networks.
+
+These novel pruning methods serve as proof of concept, showing initial performance comparable to the standard $L_1$ pruning baseline for both methods. The results validate the potential of symmetry-aware network pruning.
 
 ## **Section 1.6: Main Contributions per Author**
 * **Bart Kuipers:** Theoretical foundation, literature review and writing.
@@ -181,7 +177,7 @@ python evaluate_model.py --conf configs/cifar10/scalegmn_relu.yml --model_path <
 ```
 
 ### Equivariant Pruning
-The VGG state_dict from which we initializa can be found at \textit{https://github.com/chengyangfu/pytorch-vgg-cifar10/blob/master/README.md}. Store this file as model_best_cpu.pth.tar in the directory src/data. To reproduce the initial training stage of the equivariant pruning method run the following commands:
+The VGG state_dict from which we initialize can be found at [VGG state_dict](https://github.com/chengyangfu/pytorch-vgg-cifar10/blob/master/README.md). Store this file as model_best_cpu.pth.tar in the directory src/data. To reproduce the initial training stage of the equivariant pruning method run the following commands:
 ```bash
 python -u equivariant_pruning_smallCNN.py --conf configs/cifar10/eq_pruning_smallCNN.yml
 ```
