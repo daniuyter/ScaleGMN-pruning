@@ -68,7 +68,7 @@ These novel pruning methods serve as proof of concept, showing initial performan
 ## **Section 2.1: Reproduction original experiments**
 *NOTE: This section is partially adapted from [Kalogeropoulos et al.](https://github.com/jkalogero/scalegmn).* 
 
-### Setup
+### Setup environment
 
 To create a clean virtual environment and install the necessary dependencies execute:
 ```bash
